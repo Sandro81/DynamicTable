@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 
 class SandorTable extends Controller
 {
-
-
-
-
+    /**
+     * @param $status
+     * @return mixed
+     */
     public function colorStatus($status){
 
         $color = [
@@ -219,8 +219,5 @@ class SandorTable extends Controller
 
         return $impagination;
     }
-
-
-
 
 }
