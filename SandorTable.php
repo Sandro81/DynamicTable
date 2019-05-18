@@ -44,6 +44,13 @@ class SandorTable extends Controller
     }
 
 
+    /**
+     * @param $id
+     * @param $value
+     * @param $onclickScript
+     * @param $class
+     * @return string
+     */
     public function pageCode($id, $value, $onclickScript, $class ){
         return '<li class="page-item '.$class.'" style="min-width: 60px; max-width: 60px; text-align: center;">
                               <a class="page-link" href="#" id="page-'.$id.'" '.$onclickScript.'>'.$value.'</a>
@@ -65,7 +72,7 @@ class SandorTable extends Controller
         $previousDisable = ($request->nPage == 1) ? 'disabled' : '';
         $nextDisable = ($request->nPage == $numeroOfPages) ? 'disabled' : '';
 
-        $impagination =   '<table><tr><td colspan="3" class="pageQuantity"><input type="hidden" value="'.$request->nPage.'" id="nPage"> Page '.$request->nPage.' of '.$numeroOfPages.'</td></tr><tr><td colspan="5">
+        $pagination =   '<table><tr><td colspan="3" class="pageQuantity"><input type="hidden" value="'.$request->nPage.'" id="nPage"> Page '.$request->nPage.' of '.$numeroOfPages.'</td></tr><tr><td colspan="5">
                         <nav aria-label="...">
                           <ul class="pagination">
                           <li class="page-item '.$previousDisable.'" >
@@ -81,7 +88,7 @@ class SandorTable extends Controller
 
             //pagina selezionata
             if($i == $request->nPage){
-                $impagination .= $this->pageCode($i, $i, $onclickScript, 'disabled' );
+                $pagination .= $this->pageCode($i, $i, $onclickScript, 'disabled' );
             }
 
             $leftButton = $request->nPage - $i;
@@ -92,21 +99,21 @@ class SandorTable extends Controller
                 if($request->nPage != $i){
                     switch ($i) {
                         case 1:
-                            $impagination .= $codiceNumeroPagina;
+                            $pagination .= $codiceNumeroPagina;
                             break;
                         case 2:
-                            $impagination .= $codiceNumeroPagina;
+                            $pagination .= $codiceNumeroPagina;
                             break;
                         case 3:
-                            $impagination .= $codiceNumeroPagina;
+                            $pagination .= $codiceNumeroPagina;
                             break;
                         default:
                             //Mostro i pulsanti a sinistra
                             if(($i < $request->nPage) && ($leftButton < 3) && ($i < ($numeroOfPages -2))){
-                                $impagination .= $codiceNumeroPagina;
+                                $pagination .= $codiceNumeroPagina;
                             } else{
                                 if(($leftButton == 3) && ($i > 3)){
-                                    $impagination .= $puntini;
+                                    $pagination .= $puntini;
                                 }
                             }
                     }
@@ -116,63 +123,63 @@ class SandorTable extends Controller
                 switch ($request->nPage) {
                     case 1:
                         if($i == 4){
-                            $impagination .= $puntini.$this->pageCode((ceil($numeroOfPages/2))-2, ceil($numeroOfPages/2)-2, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))-1, ceil($numeroOfPages/2)-1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+1, ceil($numeroOfPages/2)+1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+2, ceil($numeroOfPages/2)+2, $onclickScript, '' );
+                            $pagination .= $puntini.$this->pageCode((ceil($numeroOfPages/2))-2, ceil($numeroOfPages/2)-2, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))-1, ceil($numeroOfPages/2)-1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+1, ceil($numeroOfPages/2)+1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+2, ceil($numeroOfPages/2)+2, $onclickScript, '' );
                         }
                         break;
                     case 2:
                         if($i == 5){
-                            $impagination .= $puntini.$this->pageCode((ceil($numeroOfPages/2))-1, ceil($numeroOfPages/2)-1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+1, ceil($numeroOfPages/2)+1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))-2, ceil($numeroOfPages/2)-2, $onclickScript, '' );
+                            $pagination .= $puntini.$this->pageCode((ceil($numeroOfPages/2))-1, ceil($numeroOfPages/2)-1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+1, ceil($numeroOfPages/2)+1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))-2, ceil($numeroOfPages/2)-2, $onclickScript, '' );
                         }
                         break;
                     case 3:
                         if($i == 6){
-                            $impagination .= $puntini.$this->pageCode((ceil($numeroOfPages/2))-1, ceil($numeroOfPages/2)-1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+1, ceil($numeroOfPages/2)+1, $onclickScript, '' );
+                            $pagination .= $puntini.$this->pageCode((ceil($numeroOfPages/2))-1, ceil($numeroOfPages/2)-1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+1, ceil($numeroOfPages/2)+1, $onclickScript, '' );
                         }
                         break;
                     case 4:
                         if($i == 7){
-                            $impagination .= $puntini.$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+1, ceil($numeroOfPages/2)+1, $onclickScript, '' );
+                            $pagination .= $puntini.$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+1, ceil($numeroOfPages/2)+1, $onclickScript, '' );
                         }
                         break;
                     case 5:
                         if($i == 8){
-                            $impagination .= $puntini.$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' );
+                            $pagination .= $puntini.$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' );
                         }
                         break;
                     case 6:
                         if($i == 9){
-                            $impagination .= $puntini;
+                            $pagination .= $puntini;
                         }
                         break;
 
                     case ($numeroOfPages - 5 ):
                         if($i == ($numeroOfPages - 8)){
-                            $impagination .= $puntini;
+                            $pagination .= $puntini;
                         }
                         break;
                     case ($numeroOfPages - 4 ):
                         if($i == ($numeroOfPages - 7)){
-                            $impagination .= $this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$puntini;
+                            $pagination .= $this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$puntini;
                         }
                         break;
                     case ($numeroOfPages -3 ):
                         if($i == ($numeroOfPages - 6)){
-                            $impagination .= $this->pageCode((ceil($numeroOfPages/2))-1, ceil($numeroOfPages/2)-1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$puntini;
+                            $pagination .= $this->pageCode((ceil($numeroOfPages/2))-1, ceil($numeroOfPages/2)-1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$puntini;
                         }
                         break;
                     case ($numeroOfPages -2 ):
                         if($i == ($numeroOfPages - 5)){
-                            $impagination .= $this->pageCode((ceil($numeroOfPages/2))-1, ceil($numeroOfPages/2)-1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+1, ceil($numeroOfPages/2)+1, $onclickScript, '' ).$puntini;
+                            $pagination .= $this->pageCode((ceil($numeroOfPages/2))-1, ceil($numeroOfPages/2)-1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+1, ceil($numeroOfPages/2)+1, $onclickScript, '' ).$puntini;
                         }
                         break;
                     case ($numeroOfPages -1 ):
                         if($i == ($numeroOfPages - 4)){
-                            $impagination .= $this->pageCode((ceil($numeroOfPages/2))-1, ceil($numeroOfPages/2)-1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+1, ceil($numeroOfPages/2)+1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+2, ceil($numeroOfPages/2)+2, $onclickScript, '' ).$puntini;
+                            $pagination .= $this->pageCode((ceil($numeroOfPages/2))-1, ceil($numeroOfPages/2)-1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+1, ceil($numeroOfPages/2)+1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+2, ceil($numeroOfPages/2)+2, $onclickScript, '' ).$puntini;
                         }
                         break;
                     case $numeroOfPages:
                         if($i == ($numeroOfPages - 3)){
-                            $impagination .= $this->pageCode((ceil($numeroOfPages/2))-2, ceil($numeroOfPages/2)-2, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))-1, ceil($numeroOfPages/2)-1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+1, ceil($numeroOfPages/2)+1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+2, ceil($numeroOfPages/2)+2, $onclickScript, '' ).$puntini;
+                            $pagination .= $this->pageCode((ceil($numeroOfPages/2))-2, ceil($numeroOfPages/2)-2, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))-1, ceil($numeroOfPages/2)-1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+1, ceil($numeroOfPages/2)+1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+2, ceil($numeroOfPages/2)+2, $onclickScript, '' ).$puntini;
                         }
                         break;
                     default:
@@ -181,43 +188,43 @@ class SandorTable extends Controller
                     switch ($i) {
                         case $numeroOfPages:
 
-                            $impagination .= $codiceNumeroPagina;
+                            $pagination .= $codiceNumeroPagina;
 
                             break;
                         case ($numeroOfPages - 1):
 
-                            $impagination .= $codiceNumeroPagina;
+                            $pagination .= $codiceNumeroPagina;
 
                             break;
                         case ($numeroOfPages - 2):
 
-                            $impagination .= $codiceNumeroPagina;
+                            $pagination .= $codiceNumeroPagina;
 
                             break;
                         default:
                             //Mostro il pulsante a destra
                             if(($i > $request->nPage) && ($rightButton < 3) && ($i > 3)){
-                                $impagination .= $codiceNumeroPagina;
+                                $pagination .= $codiceNumeroPagina;
                             } else{
                                 if(($rightButton == 3) && ($i < ($numeroOfPages - 2))){
-                                    $impagination .= $puntini;
+                                    $pagination .= $puntini;
                                 }
                             }
                     }
                 }
             } else {
                 if($request->nPage != $i){
-                    $impagination .= $this->pageCode($i, $i, $onclickScript, '' );
+                    $pagination .= $this->pageCode($i, $i, $onclickScript, '' );
                 }
             }
         }
-        $impagination .= '  <li class="page-item '.$nextDisable.'">
+        $pagination .= '  <li class="page-item '.$nextDisable.'">
                               <a class="page-link" href="#" id="page-'.($request->nPage +1 ).'" '.$onclickScript.'>Next</a>
                             </li>
                           </ul>
                         </nav></td> </tr></table>';
 
-        return $impagination;
+        return $pagination;
     }
 
 }
