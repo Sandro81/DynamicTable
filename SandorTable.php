@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 class SandorTable extends Controller
 {
+
     /**
      * @param $status
      * @return mixed
@@ -63,20 +64,20 @@ class SandorTable extends Controller
      * @param Request $request
      * @return string
      */
-    public function paginationCode($numberOfEntries, Request $request){
+    public function paginationCode($numberOfEntries, $nPage, $nRows){
         //Paginazione
-        $numeroOfPages = ceil($numberOfEntries/$request->nRows);
+        $numeroOfPages = ceil($numberOfEntries/$nRows);
 
         $onclickScript = 'onclick="json_table(\'CHANGE-PAGE\', event);"';
 
-        $previousDisable = ($request->nPage == 1) ? 'disabled' : '';
-        $nextDisable = ($request->nPage == $numeroOfPages) ? 'disabled' : '';
+        $previousDisable = ($nPage == 1) ? 'disabled' : '';
+        $nextDisable = ($nPage == $numeroOfPages) ? 'disabled' : '';
 
-        $pagination =   '<table><tr><td colspan="3" class="pageQuantity"><input type="hidden" value="'.$request->nPage.'" id="nPage"> Page '.$request->nPage.' of '.$numeroOfPages.'</td></tr><tr><td colspan="5">
+        $pagination =   '<table><tr><td colspan="3" class="pageQuantity"><input type="hidden" value="'.$nPage.'" id="nPage"> Page '.$nPage.' of '.$numeroOfPages.'</td></tr><tr><td colspan="5">
                         <nav aria-label="...">
                           <ul class="pagination">
                           <li class="page-item '.$previousDisable.'" >
-                              <a class="page-link" href="#" id="page-'.($request->nPage -1 ).'" '.$onclickScript.'>Previous</a>
+                              <a class="page-link" href="#" id="page-'.($nPage -1 ).'" '.$onclickScript.'>Previous</a>
                             </li>';
 
 
@@ -87,16 +88,16 @@ class SandorTable extends Controller
             $codiceNumeroPagina = $this->pageCode($i, $i, $onclickScript, '' );
 
             //pagina selezionata
-            if($i == $request->nPage){
+            if($i == $nPage){
                 $pagination .= $this->pageCode($i, $i, $onclickScript, 'disabled' );
             }
 
-            $leftButton = $request->nPage - $i;
-            $rightButton = $i - $request->nPage;
+            $leftButton = $nPage - $i;
+            $rightButton = $i - $nPage;
 
             if($numeroOfPages > 16){
 
-                if($request->nPage != $i){
+                if($nPage != $i){
                     switch ($i) {
                         case 1:
                             $pagination .= $codiceNumeroPagina;
@@ -109,7 +110,7 @@ class SandorTable extends Controller
                             break;
                         default:
                             //Mostro i pulsanti a sinistra
-                            if(($i < $request->nPage) && ($leftButton < 3) && ($i < ($numeroOfPages -2))){
+                            if(($i < $nPage) && ($leftButton < 3) && ($i < ($numeroOfPages -2))){
                                 $pagination .= $codiceNumeroPagina;
                             } else{
                                 if(($leftButton == 3) && ($i > 3)){
@@ -120,7 +121,7 @@ class SandorTable extends Controller
                 }
 
 
-                switch ($request->nPage) {
+                switch ($nPage) {
                     case 1:
                         if($i == 4){
                             $pagination .= $puntini.$this->pageCode((ceil($numeroOfPages/2))-2, ceil($numeroOfPages/2)-2, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))-1, ceil($numeroOfPages/2)-1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2)), ceil($numeroOfPages/2), $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+1, ceil($numeroOfPages/2)+1, $onclickScript, '' ).$this->pageCode((ceil($numeroOfPages/2))+2, ceil($numeroOfPages/2)+2, $onclickScript, '' );
@@ -184,7 +185,7 @@ class SandorTable extends Controller
                         break;
                     default:
                 }
-                if($request->nPage != $i){
+                if($nPage != $i){
                     switch ($i) {
                         case $numeroOfPages:
 
@@ -203,7 +204,7 @@ class SandorTable extends Controller
                             break;
                         default:
                             //Mostro il pulsante a destra
-                            if(($i > $request->nPage) && ($rightButton < 3) && ($i > 3)){
+                            if(($i > $nPage) && ($rightButton < 3) && ($i > 3)){
                                 $pagination .= $codiceNumeroPagina;
                             } else{
                                 if(($rightButton == 3) && ($i < ($numeroOfPages - 2))){
@@ -213,13 +214,13 @@ class SandorTable extends Controller
                     }
                 }
             } else {
-                if($request->nPage != $i){
+                if($nPage != $i){
                     $pagination .= $this->pageCode($i, $i, $onclickScript, '' );
                 }
             }
         }
         $pagination .= '  <li class="page-item '.$nextDisable.'">
-                              <a class="page-link" href="#" id="page-'.($request->nPage +1 ).'" '.$onclickScript.'>Next</a>
+                              <a class="page-link" href="#" id="page-'.($nPage +1 ).'" '.$onclickScript.'>Next</a>
                             </li>
                           </ul>
                         </nav></td> </tr></table>';
