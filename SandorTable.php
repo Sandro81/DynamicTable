@@ -27,7 +27,7 @@ class SandorTable extends Controller
             'alert alert-secondary',
             'alert alert-primary',
             'alert alert-secondary',
-            ];
+        ];
 
         switch ($status){
             case 1:
@@ -53,15 +53,33 @@ class SandorTable extends Controller
      * @return string
      */
     public function pageCode($id, $value, $onclickScript, $class ){
-        return '<li class="page-item '.$class.'" style="min-width: 60px; max-width: 60px; text-align: center;">
+
+        if($class == 'disabled'){
+            if($value == '...'){
+                $return = '<li class="page-item disabled" style="min-width: 60px; max-width: 60px; text-align: center;">
+                              <a class="page-link"  id="page-'.$id.'">'.$value.'</a>
+                            </li>';
+            } else {
+                $return = '<li class="page-item active" style="min-width: 60px; max-width: 60px; text-align: center;">
+                              <a class="page-link"  id="page-'.$id.'">'.$value.'</a>
+                            </li>';
+            }
+
+        }else{
+            $return = '<li class="page-item '.$class.'" style="min-width: 60px; max-width: 60px; text-align: center;">
                               <a class="page-link" href="#" id="page-'.$id.'" '.$onclickScript.'>'.$value.'</a>
                             </li>';
+        }
+
+
+        return $return;
     }
 
 
     /**
      * @param $numberOfEntries
-     * @param Request $request
+     * @param $nPage
+     * @param $nRows
      * @return string
      */
     public function paginationCode($numberOfEntries, $nPage, $nRows){
